@@ -39,14 +39,14 @@ public Optional <Empresa> buscarPorId(Long id){
 public Empresa editarDadoEmpresa(Long id, Empresa dadosAtualizado){
     Empresa empresaBuscada = buscarPorId(id).orElseThrow(() -> new IllegalArgumentException("Empresa não encontada"));
     
-    empresaBuscada.setNome_empresa(dadosAtualizado.getNome_empresa());
+    empresaBuscada.setNome(dadosAtualizado.getNome());
     empresaBuscada.setCnpj(dadosAtualizado.getCnpj());
-    empresaBuscada.setRamo(dadosAtualizado.getRamo()); // get, post, put, delete metodos 
+    empresaBuscada.setRamo(dadosAtualizado.getRamo()); // get, post, put, delete. metodos 
 
     return empresaRepository.save(empresaBuscada);
 }
  public List<Empresa> buscarEmpresaporNome(String nome_empresa){
-    return empresaRepository.findByNome_empresaContainingIgnoreCase(nome_empresa);
+    return empresaRepository.findByNomeContainingIgnoreCase(nome_empresa);
 
  }
 }
