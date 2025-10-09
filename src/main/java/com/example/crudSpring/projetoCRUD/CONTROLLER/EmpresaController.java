@@ -59,11 +59,22 @@ public String formEditar(@PathVariable("id") Long id, Model oModel) {
     return "editarEmpresa";
 }
 
-@PostMapping("/atualizarEmpresa") // serve para quando quiser cadastrar algo ou mudar no banco de dados
-public String atualizarEmpresa(@PathVariable Long id, @ModelAttribute Empresa objEmpresaAtualizado) {
+@PostMapping("/atualizarEmpresa/{id}") // serve para quando quiser cadastrar algo ou mudar no banco de dados
+public String atualizarEmpresa(@PathVariable ("id") Long id, @ModelAttribute Empresa objEmpresaAtualizado) {
+
+    empresaService.editarDadoEmpresa(id, objEmpresaAtualizado);
 
     return "redirect:/empresaCTR/listarTodasEmpresas";
 }
+
+@GetMapping("/deletarEmpresa/{id}")
+public String apagarEmpresa(@PathVariable ("id") Long id) {
+
+    empresaService.deletarEmpresa(id);
+    return "redirect:/empresaCTR/listarTodasEmpresas";
+}
+
+
 
 
 }
