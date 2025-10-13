@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Gerenciar Empresas</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
+    <!-- Bootstrap Icons -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet" />
+    <style>
+      /* Fundo azul quente com gradiente */
+      body {
+        background: linear-gradient(
+          135deg,
+          #4a90e2 0%,
+          #357abd 50%,
+          #2a5d9f 100%
+        );
+        color: #f0f4f8;
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        min-height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 20px;
+        margin: 0;
+      }
+
+      /* Animação de entrada do card */
+      @keyframes fadeInUp {
+        0% {
+          opacity: 0;
+          transform: translateY(20px);
+        }
+        100% {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      /* Animação pulsante do card */
+      @keyframes pulseShadowScale {
+        0%, 100% {
+          box-shadow:
+            0 8px 32px rgba(0, 0, 0, 0.3),
+            0 0 20px rgba(255, 255, 255, 0.15);
+          transform: scale(1);
+        }
+        50% {
+          box-shadow:
+            0 12px 40px rgba(0, 0, 0, 0.45),
+            0 0 30px rgba(255, 255, 255, 0.3);
+          transform: scale(1.02);
+        }
+      }
+
+      .container {
+        max-width: 1200px;
+        width: 100%;
+      }
+
+      .card {
+        background: #357abd;
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        border-radius: 20px;
+        padding: 40px;
+        color: #f0f4f8;
+        animation: fadeInUp 0.8s ease forwards, pulseShadowScale 4s ease-in-out infinite;
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+        overflow-x: auto;
+        text-align: center; /* Centraliza o conteúdo */
+      }
+
+      h2 {
+        text-align: center;
+        margin-bottom: 30px;
+        font-weight: 700;
+        letter-spacing: 1.5px;
+        color: #f0f4f8;
+        text-shadow: 0 0 10px rgba(255, 255, 255, 0.4);
+        transition: text-shadow 0.3s ease;
+      }
+
+      h2:hover {
+        text-shadow: 0 0 15px rgba(255, 255, 255, 0.6); /* Efeito hover no título */
+      }
+
+      p.subtitle {
+        text-align: center;
+        margin-bottom: 40px;
+        font-size: 1.1em;
+        color: rgba(255, 255, 255, 0.8);
+        letter-spacing: 0.5px;
+        font-style: italic;
+      }
+
+      /* Estilo dos botões */
+      .nova-empresa-btn {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 10px;
+        padding: 12px 24px;
+        font-weight: 600;
+        letter-spacing: 0.5px;
+        transition: all 0.4s ease;
+        border: none;
+        background: linear-gradient(
+          135deg,
+          #ffd369 0%,
+          #fbbf24 50%,
+          #f59e0b 100%
+        );
+        color: #1e293b;
+        text-shadow: 0 0 4px rgba(0, 0, 0, 0.3);
+        text-decoration: none;
+        margin: 10px 15px; /* Espaçamento entre botões */
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+      }
+
+      .nova-empresa-btn i {
+        margin-right: 8px; /* Espaço entre ícone e texto */
+      }
+
+      .nova-empresa-btn:hover {
+        background: linear-gradient(
+          135deg,
+          #fbbf24 0%,
+          #f59e0b 50%,
+          #b45309 100%
+        );
+        box-shadow: 0 6px 20px rgba(245, 158, 11, 0.7);
+        color: #1e293b;
+        transform: translateY(-2px) scale(1.05); /* Animação de scale no hover */
+      }
+
+      /* Responsividade */
+      @media (max-width: 768px) {
+        .card {
+          padding: 20px;
+          margin: 10px;
+        }
+
+        .nova-empresa-btn {
+          padding: 10px 18px;
+          font-size: 14px;
+          margin: 8px 10px;
+          width: 90%; /* Botões mais largos em mobile */
+          display: block; /* Empilha os botões */
+        }
+
+        h2 {
+          font-size: 1.5em;
+        }
+
+        p.subtitle {
+          font-size: 1em;
+        }
+      }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="card">
+            <h2>Links para Gerenciar Empresas</h2>
+            <p class="subtitle">Escolha uma opção para navegar pelas funcionalidades de empresas.</p> <!-- Subtítulo adicionado -->
+            <div class="btn-group" style="display: flex; flex-wrap: wrap; justify-content: center;">
+                <a th:href="@{/empresaCTR/viewCadEmpresa}" class="nova-empresa-btn"><i class="bi bi-plus"></i> Nova Empresa</a>
+                <a th:href="@{/empresaCTR/listarTodasEmpresas}" class="nova-empresa-btn"><i class="bi bi-list-ul"></i> Listar todas as empresas</a>
+                <a th:href="@{/empresaCTR/}" class="nova-empresa-btn"><i class="bi bi-search"></i> Listar empresa por Nome</a>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
