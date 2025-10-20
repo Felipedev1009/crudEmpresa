@@ -76,10 +76,22 @@ public String apagarEmpresa(@PathVariable ("id") Long id) {
     return "redirect:/empresaCTR/listarTodasEmpresas";
 }
 
-@GetMapping("/buscarEmpresaNome")
-public List <Empresa> executarBuscaPorNome (@RequestParam ("nome") String nome_empresa, Model oModel) {
+@GetMapping("/formBuscarNome")
+public String mostrarFormBusca(Model oModel) {
+    return "buscarEmpresaNome";
+}
 
-    return empresaService.buscarEmpresaporNome(nome_empresa);
+
+@GetMapping("/buscarEmpresaNome")
+public String executarBuscaPorNome (@RequestParam ("nome") String nome_empresa, Model oModel) {
+
+   if(nome_empresa != null && !nome_empresa.isEmpty()) {
+
+   oModel.addAttribute("empresaNome", empresaService.buscarEmpresaporNome(nome_empresa));
+
+   }
+
+    return "buscarEmpresaNome";
 }
 
 

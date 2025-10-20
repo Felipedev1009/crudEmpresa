@@ -5,49 +5,255 @@
     <title>Buscar Empresa</title>
 
     <style>
-    table, th, td {
-    border: 1px solid black; /* Applies a 1px solid black border to the table, table headers, and table data cells */
-    border-collapse: collapse; /* Collapses adjacent borders into a single border */
-    }
+      /* Fundo azul quente com gradiente - mesmo da página de cadastro */
+      body {
+        background: linear-gradient(
+          135deg,
+          #4a90e2 0%,
+          #357abd 50%,
+          #2a5d9f 100%
+        );
+        color: #f0f4f8;
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        min-height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 20px;
+        margin: 0;
+      }
+
+      /* Animação de entrada do card - reutilizada e aprimorada */
+      @keyframes fadeInUp {
+        0% {
+          opacity: 0;
+          transform: translateY(20px);
+        }
+        100% {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      /* Animação pulsante do card - suavizada para lista */
+      @keyframes pulseShadowScale {
+        0%, 100% {
+          box-shadow:
+            0 8px 32px rgba(0, 0, 0, 0.3),
+            0 0 20px rgba(255, 255, 255, 0.15);
+          transform: scale(1);
+        }
+        50% {
+          box-shadow:
+            0 12px 40px rgba(0, 0, 0, 0.45),
+            0 0 30px rgba(255, 255, 255, 0.3);
+          transform: scale(1.02);
+        }
+      }
+
+      .container {
+        max-width: 1200px; /* Aumentado para acomodar tabela */
+        width: 100%;
+      }
+
+      .card {
+        background: #357abd;
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        border-radius: 20px;
+        padding: 40px;
+        color: #f0f4f8;
+        animation: fadeInUp 0.8s ease forwards, pulseShadowScale 4s ease-in-out infinite;
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+        overflow-x: auto; /* Para responsividade da tabela em telas pequenas */
+      }
+
+      h2 {
+        text-align: center;
+        margin-bottom: 30px;
+        font-weight: 600;
+        letter-spacing: 1px;
+        color: #f0f4f8;
+        text-shadow: 0 0 8px rgba(255, 255, 255, 0.3);
+      }
+
+      h4 {
+        text-align: center;
+        margin-bottom: 20px;
+        font-weight: 500;
+        color: #f0f4f8;
+      }
+
+      /* Estilo da tabela - aprimorado com cores e hover */
+      table {
+        width: 100%;
+        border-collapse: separate;
+        border-spacing: 0;
+        border-radius: 10px;
+        overflow: hidden;
+        background: rgba(255, 255, 255, 0.1);
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+        margin-bottom: 30px;
+      }
+
+      th {
+        background: linear-gradient(
+          135deg,
+          #ffd369 0%,
+          #fbbf24 50%,
+          #f59e0b 100%
+        );
+        color: #1e293b;
+        font-weight: 600;
+        padding: 15px 12px;
+        text-align: left;
+        letter-spacing: 0.5px;
+        text-shadow: 0 0 4px rgba(0, 0, 0, 0.3);
+        border: none;
+      }
+
+      td {
+        padding: 12px;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+        color: #f0f4f8;
+        transition: background 0.3s ease;
+      }
+
+      tr:hover {
+        background: rgba(255, 255, 255, 0.15);
+        transform: scale(1.01);
+        transition: background 0.3s ease, transform 0.3s ease;
+      }
+
+      tr:last-child td {
+        border-bottom: none;
+      }
+
+      /* Estilo do formulário de busca */
+      .search-form {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin-bottom: 30px;
+        gap: 10px;
+      }
+
+      .search-input {
+        padding: 10px 15px;
+        border-radius: 8px;
+        border: 1px solid rgba(255, 255, 255, 0.3);
+        background: rgba(255, 255, 255, 0.1);
+        color: #f0f4f8;
+        font-size: 16px;
+        outline: none;
+        transition: all 0.3s ease;
+      }
+
+      .search-input::placeholder {
+        color: rgba(240, 244, 248, 0.7);
+      }
+
+      .search-input:focus {
+        background: rgba(255, 255, 255, 0.2);
+        box-shadow: 0 0 10px rgba(255, 211, 105, 0.5);
+      }
+
+      .search-btn {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 10px;
+        padding: 10px 20px;
+        font-weight: 600;
+        letter-spacing: 0.5px;
+        transition: all 0.4s ease;
+        border: none;
+        background: linear-gradient(
+          135deg,
+          #ffd369 0%,
+          #fbbf24 50%,
+          #f59e0b 100%
+        );
+        color: #1e293b;
+        text-shadow: 0 0 4px rgba(0, 0, 0, 0.3);
+        cursor: pointer;
+      }
+
+      .search-btn:hover {
+        background: linear-gradient(
+          135deg,
+          #fbbf24 0%,
+          #f59e0b 50%,
+          #b45309 100%
+        );
+        box-shadow: 0 4px 15px rgba(245, 158, 11, 0.7);
+        color: #1e293b;
+        transform: translateY(-2px);
+      }
+
+      /* Responsividade para mobile */
+      @media (max-width: 768px) {
+        .card {
+          padding: 20px;
+          margin: 10px;
+        }
+
+        table {
+          font-size: 14px;
+        }
+
+        th, td {
+          padding: 8px 6px;
+        }
+
+        .search-form {
+          flex-direction: column;
+          gap: 15px;
+        }
+
+        .search-input {
+          width: 100%;
+          max-width: 300px;
+        }
+      }
     </style>
 
 </head>
 <body>
 
-    <h2>Buscar Empresa por Nome</h2>
+    <div class="container">
+        <div class="card">
+            <h2>Buscar Empresa por Nome</h2>
 
-    <!-- Formulário de busca -->
-    <form th:action="@{/empresaCTR/buscarNome}" method="get">
-        <div>
-            <input type="text" name="nome" th:value="${param.nome}" />
-            <button type="submit">Buscar</button>
+            <!-- Formulário de busca -->
+            <form th:action="@{/empresaCTR/buscarNome}" method="get" class="search-form">
+                <input type="text" name="nome" th:value="${param.nome}" class="search-input" placeholder="Digite o nome da empresa" />
+                <button type="submit" class="search-btn">Buscar</button>
+            </form>
+            
+            <!-- Exibe a tabela com os resultados -->
+            <div th:if="${empresaNome}">
+                <h4 th:text="'Resultado da busca: ' + ${empresaNome.size()} + ' empresa(s) encontrada(s)'"></h4>
+
+                <table>
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Nome</th>
+                            <th>Cnpj</th>
+                            <th>Ramo</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr th:each="empresa : ${empresaNome}">
+                            <td th:text="${empresa.id_empresa}"></td>
+                            <td th:text="${empresa.nome}"></td>
+                            <td th:text="${empresa.cnpj}"></td>
+                            <td th:text="${empresa.ramo}"></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
         </div>
-    </form>
-    
-    <br>
-
-    <!-- Exibe a tabela com os resultados -->
-    <div th:if="${empresaNome}">
-        <h4 th:text="'Resultado da busca: ' + ${empresaNome.size()} + ' empresa(s) encontrada(s)'"></h4>
-
-        <table>
-            <thead>
-                <tr>
-                    <th>ID</th>
-                    <th>Nome</th>
-                    <th>Cnpj</th>
-                    <th>Ramo</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr th:each="empresa : ${empresaNome}">
-                    <td th:text="${empresa.id_empresa}"></td>
-                    <td th:text="${empresa.nome}"></td>
-                    <td th:text="${empresa.cnpj}"></td>
-                    <td th:text="${empresa.ramo}"></td>
-                </tr>
-            </tbody>
-        </table>
     </div>
 
 </body>
