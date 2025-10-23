@@ -199,6 +199,8 @@
               id="cnpj"
               class="form-control"
               placeholder="Digite o CNPJ"
+              maxlength="14"
+              oninput="this.value = this.value.replace(/[^0-9]/g, '');"
               required
             />
           </div>
