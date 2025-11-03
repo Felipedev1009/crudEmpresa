@@ -166,8 +166,13 @@
             <h2>Links para Gerenciar Empresas</h2>
             <p class="subtitle">Escolha uma opção para navegar pelas funcionalidades de empresas.</p> <!-- Subtítulo adicionado -->
             <div class="btn-group" style="display: flex; flex-wrap: wrap; justify-content: center;">
-                <a th:href="@{/empresaCTR/viewCadEmpresa}" class="nova-empresa-btn"><i class="bi bi-plus"></i> Nova Empresa</a>
+              
+                <a th:href="@{/empresaCTR/viewCadEmpresa}" class="nova-empresa-btn"><i class="bi bi-plus"></i> Cadastrar Empresa</a>
+
+                <a th:href="@{/funcionarioCTR/formFuncionario}" class="nova-empresa-btn"><i class="bi bi-plus"></i> Cadastrar Funcionario</a>
+                
                 <a th:href="@{/empresaCTR/listarTodasEmpresas}" class="nova-empresa-btn"><i class="bi bi-list-ul"></i> Listar todas as empresas</a>
+
                 <a th:href="@{/empresaCTR/formBuscarNome}" class="nova-empresa-btn"><i class="bi bi-search"></i> Listar empresa por Nome</a>
             </div>
         </div>
