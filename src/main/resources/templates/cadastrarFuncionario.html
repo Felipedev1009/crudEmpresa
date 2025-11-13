@@ -119,6 +119,12 @@
         box-shadow: 0 0 10px rgba(255, 211, 105, 0.5);
       }
 
+      /* Estilo específico para as opções do select de empresa - fundo branco com letras pretas na lista dropdown */
+      #empresa option {
+        background: white;
+        color: black;
+      }
+
       /* Botão Salvar - no mesmo estilo do Salvar da página de cadastro */
       button[type="submit"] {
         display: inline-flex;
@@ -181,7 +187,7 @@
       <div class="card">
         <h2>Cadastrar Funcionario</h2>
 
-        <form th:action="@{/funcionarioCTR/salvar}" method="post" th:object="${funcionario}">
+        <form th:action="@{/funcionarioCTR/salvarFuncionario}" method="post" th:object="${funcionario}">
         
         <div>
             <label for="nome">Nome:</label>
