@@ -62,6 +62,18 @@ public String deletarFuncionario(@PathVariable ("id") Long id) {
     ligacaoFuncionarioService.deletarFuncionario(id);
     return "redirect:/funcionarioCTR/listarFunc";
 }
+
+@GetMapping("/formAtualizar/{id}")
+public String formaAtualizarFuncionario (@PathVariable ("id") Long id, Model oModel) {
+   
+    Funcionario funcionarioEncontrado = ligacaoFuncionarioService.buscarFuncionarioPorId(id).orElseThrow(() -> new IllegalArgumentException("Funcionario não encontrado"));;
+    
+    oModel.addAttribute("funcionario", funcionarioEncontrado );
+    oModel.addAttribute("empresas", ligacaoEmpresaService.findAll());
+   
+    return "redirect:/funcionarioCTR/editarFuncionario";
+}
+
     
     
 }
