@@ -71,9 +71,15 @@ public String formaAtualizarFuncionario (@PathVariable ("id") Long id, Model oMo
     oModel.addAttribute("funcionario", funcionarioEncontrado );
     oModel.addAttribute("empresas", ligacaoEmpresaService.findAll());
    
-    return "redirect:/funcionarioCTR/editarFuncionario";
+    return "editarFuncionario";
 }
+      @PostMapping("/atualizarFuncionario/{id}")
+      public String editarFuncionario (@PathVariable ("id") Long id, @ModelAttribute Funcionario objFuncionarioAtualizado) {
+          //TODO: process POST request
 
-    
-    
+          ligacaoFuncionarioService.atualizarFuncionario(id, objFuncionarioAtualizado);
+          
+          return "redirect:/funcionarioCTR/listarFunc";
+      }
+      
 }
