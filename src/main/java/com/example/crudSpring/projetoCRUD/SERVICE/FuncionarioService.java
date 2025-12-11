@@ -46,5 +46,9 @@ public class FuncionarioService {
     objFuncionario.setIdentificadorEmpresa(dadosAtualizados.getIdentificadorEmpresa()); 
 
 }
+    public List<Funcionario> buscarFuncporNome(String nomefunc) {
+    return ligacaoFuncionarioRepository.findByNomeContainingIgnoreCase(nomefunc);
+
+}
 
 }

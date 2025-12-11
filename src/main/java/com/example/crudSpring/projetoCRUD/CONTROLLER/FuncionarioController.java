@@ -16,8 +16,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
-
-
 @Controller
 @RequestMapping("/funcionarioCTR")
 public class FuncionarioController {
@@ -31,55 +29,69 @@ public class FuncionarioController {
     @GetMapping("/listarFunc")
     public String listarTodosFuncionario(Model oModel) {
         oModel.addAttribute("funcionarios", ligacaoFuncionarioService.listarTodosFuncionarios());
-        
+
         oModel.addAttribute("empresa", ligacaoEmpresaService.findAll());
-        
+
         return "listarFuncionarios";
     }
-    
+
     @GetMapping("/formFuncionario")
     public String mostrarFormCadastro(Model oModel) {
 
         oModel.addAttribute("funcionario", new Funcionario());
-        
+
         oModel.addAttribute("empresas", ligacaoEmpresaService.findAll());
 
         return "cadastrarFuncionario";
     }
 
     @PostMapping("/salvarFuncionario")
-    public String cadastrarFuncionario(@ModelAttribute Funcionario objFuncionario){
+    public String cadastrarFuncionario(@ModelAttribute Funcionario objFuncionario) {
 
-    ligacaoFuncionarioService.cadastFuncionario(objFuncionario);
+        ligacaoFuncionarioService.cadastFuncionario(objFuncionario);
 
-    return "redirect:/funcionarioCTR/listarFunc";
+        return "redirect:/funcionarioCTR/listarFunc";
 
     }
 
     @GetMapping("/deletarFuncionario/{id}")
-public String deletarFuncionario(@PathVariable ("id") Long id) {
+    public String deletarFuncionario(@PathVariable("id") Long id) {
 
-    ligacaoFuncionarioService.deletarFuncionario(id);
-    return "redirect:/funcionarioCTR/listarFunc";
-}
+        ligacaoFuncionarioService.deletarFuncionario(id);
+        return "redirect:/funcionarioCTR/listarFunc";
+    }
 
-@GetMapping("/formAtualizar/{id}")
-public String formaAtualizarFuncionario (@PathVariable ("id") Long id, Model oModel) {
-   
-    Funcionario funcionarioEncontrado = ligacaoFuncionarioService.buscarFuncionarioPorId(id).orElseThrow(() -> new IllegalArgumentException("Funcionario não encontrado"));;
-    
-    oModel.addAttribute("funcionario", funcionarioEncontrado );
-    oModel.addAttribute("empresas", ligacaoEmpresaService.findAll());
-   
-    return "editarFuncionario";
-}
-      @PostMapping("/atualizarFuncionario/{id}")
-      public String editarFuncionario (@PathVariable ("id") Long id, @ModelAttribute Funcionario objFuncionarioAtualizado) {
-          //TODO: process POST request
+    @GetMapping("/formAtualizar/{id}")
+    public String formaAtualizarFuncionario(@PathVariable("id") Long id, Model oModel) {
 
-          ligacaoFuncionarioService.atualizarFuncionario(id, objFuncionarioAtualizado);
-          
-          return "redirect:/funcionarioCTR/listarFunc";
-      }
-      
+        Funcionario funcionarioEncontrado = ligacaoFuncionarioService.buscarFuncionarioPorId(id)
+                .orElseThrow(() -> new IllegalArgumentException("Funcionario não encontrado"));
+        ;
+
+        oModel.addAttribute("funcionario", funcionarioEncontrado);
+        oModel.addAttribute("empresas", ligacaoEmpresaService.findAll());
+
+        return "editarFuncionario";
+    }
+
+    @PostMapping("/atualizarFuncionario/{id}")
+    public String editarFuncionario(@PathVariable("id") Long id, @ModelAttribute Funcionario objFuncionarioAtualizado) {
+        // TODO: process POST request
+
+        ligacaoFuncionarioService.atualizarFuncionario(id, objFuncionarioAtualizado);
+
+        return "redirect:/funcionarioCTR/listarFunc";
+    }
+
+    @GetMapping("/buscarFuncionarioNome")
+    public String buscarFuncporNome(@RequestParam(value = "nomefunc", required = false) String nomefunc, Model oModel) {
+
+        if (nomefunc != null && !nomefunc.isBlank()) {
+
+            oModel.addAttribute("funcionarioNome", ligacaoFuncionarioService.buscarFuncporNome(nomefunc));
+
+        }
+
+        return "buscarFuncNome";
+    }
 }

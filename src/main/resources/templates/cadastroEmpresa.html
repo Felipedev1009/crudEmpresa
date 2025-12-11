@@ -1,34 +1,94 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Cadastrar Empresa</title>
+    <!-- Google Fonts para tipografia profissional -->
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
     <!-- Bootstrap CSS -->
-    <link
-      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
-      rel="stylesheet"
-    />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
+    <!-- Bootstrap Icons -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet" />
     <style>
-      /* Fundo azul quente com gradiente */
+      /* Variáveis CSS para paleta profissional (azul corporativo e cinzas) */
+      :root {
+        --primary-bg-start: #1e3a8a; /* Azul escuro */
+        --primary-bg-end: #3b82f6; /* Azul médio */
+        --card-bg: rgba(248, 250, 252, 0.95); /* Branco com transparência */
+        --text-color: #1f2937; /* Cinza escuro */
+        --subtitle-color: #64748b; /* Cinza médio */
+        --btn-gradient-start: #2563eb; /* Azul profissional */
+        --btn-gradient-end: #1d4ed8; /* Azul escuro */
+        --btn-hover-start: #1d4ed8; /* Azul mais escuro */
+        --btn-hover-end: #1e40af; /* Azul intenso */
+        --btn-secondary-bg: rgba(100, 116, 139, 0.1); /* Cinza claro */
+        --btn-secondary-border: rgba(100, 116, 139, 0.3);
+        --shadow-light: rgba(0, 0, 0, 0.1);
+        --shadow-glow: rgba(59, 130, 246, 0.2);
+        --transition-fast: cubic-bezier(0.4, 0, 0.2, 1);
+        --transition-slow: cubic-bezier(0.25, 0.46, 0.45, 0.94);
+      }
+
+      /* Fundo com gradiente profissional */
       body {
-        background: linear-gradient(
-          135deg,
-          #4a90e2 0%,
-          #357abd 50%,
-          #2a5d9f 100%
-        );
-        color: #f0f4f8;
-        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        background: linear-gradient(135deg, var(--primary-bg-start) 0%, var(--primary-bg-end) 100%);
+        color: var(--text-color);
+        font-family: 'Roboto', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         min-height: 100vh;
         display: flex;
         align-items: center;
         justify-content: center;
         padding: 20px;
         margin: 0;
+        overflow-x: hidden;
       }
 
-      /* Animação de entrada do card */
+      /* Container responsivo */
+      .container {
+        max-width: 500px;
+        width: 100%;
+        padding: 0 15px;
+      }
+
+      /* Card profissional com bordas suaves e sombra sutil */
+      .card {
+        background: var(--card-bg);
+        backdrop-filter: blur(15px); /* Efeito de vidro leve */
+        -webkit-backdrop-filter: blur(15px);
+        border: 1px solid rgba(0, 0, 0, 0.05);
+        border-radius: 16px;
+        padding: 50px;
+        color: var(--text-color);
+        box-shadow: 
+          0 8px 32px var(--shadow-light),
+          0 0 20px var(--shadow-glow);
+        animation: fadeInUp 1s var(--transition-slow) forwards;
+        transition: transform 0.3s var(--transition-fast), box-shadow 0.3s var(--transition-fast);
+        text-align: center;
+        position: relative;
+      }
+
+      .card::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: linear-gradient(45deg, rgba(255, 255, 255, 0.1), rgba(0, 0, 0, 0.02));
+        border-radius: inherit;
+        pointer-events: none;
+      }
+
+      .card:hover {
+        transform: translateY(-2px);
+        box-shadow: 
+          0 12px 40px var(--shadow-light),
+          0 0 30px var(--shadow-glow);
+      }
+
+      /* Animações sutis */
       @keyframes fadeInUp {
         0% {
           opacity: 0;
@@ -40,136 +100,158 @@
         }
       }
 
-      /* Animação pulsante do card */
-      @keyframes pulseShadowScale {
-        0%, 100% {
-          box-shadow:
-            0 8px 32px rgba(0, 0, 0, 0.3),
-            0 0 20px rgba(255, 255, 255, 0.15);
-          transform: scale(1);
-        }
-        50% {
-          box-shadow:
-            0 12px 40px rgba(0, 0, 0, 0.45),
-            0 0 30px rgba(255, 255, 255, 0.3);
-          transform: scale(1.03);
-        }
-      }
-
-      .container {
-        max-width: 500px;
-      }
-
-      .card {
-        background: #357abd;
-        border: 1px solid rgba(255, 255, 255, 0.2);
-        border-radius: 20px;
-        padding: 40px;
-        color: #f0f4f8;
-        animation: fadeInUp 0.8s ease forwards, pulseShadowScale 4s ease-in-out infinite;
-        transition: transform 0.3s ease, box-shadow 0.3s ease;
-      }
-
+      /* Título profissional */
       h2 {
         text-align: center;
         margin-bottom: 30px;
-        font-weight: 600;
+        font-weight: 700;
         letter-spacing: 1px;
-        color: #f0f4f8;
-        text-shadow: 0 0 8px rgba(255, 255, 255, 0.3);
+        color: var(--text-color);
+        position: relative;
+      }
+
+      h2::after {
+        content: '';
+        position: absolute;
+        bottom: -10px;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 80px;
+        height: 4px;
+        background: linear-gradient(90deg, var(--btn-gradient-start), var(--btn-gradient-end));
+        border-radius: 2px;
+      }
+
+      /* Formulário */
+      .form-group {
+        margin-bottom: 25px;
       }
 
       label.form-label {
         font-weight: 500;
-        color: #ffd369;
+        color: var(--text-color);
         margin-bottom: 8px;
         font-size: 14px;
         letter-spacing: 0.5px;
-        text-shadow: 0 0 4px rgba(255, 211, 105, 0.7);
+        display: block;
+        text-align: left; /* Alinhado à esquerda */
       }
 
       input.form-control {
-        background: rgba(255, 255, 255, 0.15);
-        border: 1px solid rgba(255, 255, 255, 0.3);
-        border-radius: 10px;
-        color: #f0f4f8;
+        background: rgba(255, 255, 255, 0.9);
+        border: 1px solid rgba(0, 0, 0, 0.1);
+        border-radius: 8px;
+        color: var(--text-color);
         padding: 12px 16px;
         font-size: 16px;
-        transition: border-color 0.3s ease, box-shadow 0.3s ease, background 0.3s ease;
+        transition: border-color 0.3s var(--transition-fast), box-shadow 0.3s var(--transition-fast), background 0.3s var(--transition-fast);
+        width: 100%;
+        box-sizing: border-box;
       }
 
       input.form-control::placeholder {
-        color: rgba(240, 244, 248, 0.7);
+        color: rgba(31, 41, 55, 0.5);
       }
 
       input.form-control:focus {
-        border-color: #ffd369 !important;
-        box-shadow: 0 0 8px 2px rgba(255, 211, 105, 0.7);
-        background: rgba(255, 255, 255, 0.3) !important;
-        color: #1e293b;
+        border-color: var(--btn-gradient-start) !important;
+        box-shadow: 0 0 8px 2px rgba(37, 99, 235, 0.2);
+        background: #ffffff !important;
         outline: none;
       }
 
-      button.btn-success {
-        border-radius: 10px;
+      /* Botões */
+      .btn-group {
+        display: flex;
+        gap: 15px;
+        justify-content: center;
+        margin-top: 30px;
+        flex-wrap: wrap;
+      }
+
+      button.btn-success, a.btn-secondary {
+        border-radius: 8px;
         padding: 12px 24px;
-        font-weight: 600;
+        font-weight: 500;
         letter-spacing: 0.5px;
-        transition: background 0.4s ease, box-shadow 0.4s ease;
+        transition: all 0.3s var(--transition-fast);
         border: none;
-        background: linear-gradient(
-          135deg,
-          #ffd369 0%,
-          #fbbf24 50%,
-          #f59e0b 100%
-        );
-        color: #1e293b;
-        text-shadow: 0 0 4px rgba(0, 0, 0, 0.3);
-      }
-
-      button.btn-success:hover {
-        background: linear-gradient(
-          135deg,
-          #fbbf24 0%,
-          #f59e0b 50%,
-          #b45309 100%
-        );
-        box-shadow: 0 4px 15px rgba(245, 158, 11, 0.7);
-        color: #1e293b;
-      }
-
-      a.btn-secondary {
-        border-radius: 10px;
-        padding: 12px 24px;
-        font-weight: 600;
-        letter-spacing: 0.5px;
-        transition: background 0.3s ease, color 0.3s ease, box-shadow 0.3s ease;
-        border: 1px solid rgba(255, 211, 105, 0.6);
-        background: rgba(255, 211, 105, 0.15);
-        color: #ffd369;
         text-decoration: none;
         display: inline-flex;
         align-items: center;
         justify-content: center;
-        text-shadow: 0 0 4px rgba(255, 211, 105, 0.7);
+        font-size: 1em;
+        min-width: 150px;
+      }
+
+      button.btn-success {
+        background: linear-gradient(135deg, var(--btn-gradient-start), var(--btn-gradient-end));
+        color: #ffffff;
+        box-shadow: 0 4px 12px rgba(37, 99, 235, 0.3);
+      }
+
+      button.btn-success:hover {
+        background: linear-gradient(135deg, var(--btn-hover-start), var(--btn-hover-end));
+        box-shadow: 0 6px 20px rgba(37, 99, 235, 0.5);
+        transform: translateY(-2px);
+      }
+
+      a.btn-secondary {
+        background: var(--btn-secondary-bg);
+        border: 1px solid var(--btn-secondary-border);
+        color: var(--text-color);
+        box-shadow: 0 2px 8px var(--shadow-light);
       }
 
       a.btn-secondary:hover {
-        background: rgba(255, 211, 105, 0.35);
-        color: #b45309;
-        box-shadow: 0 0 10px rgba(255, 211, 105, 0.9);
+        background: rgba(100, 116, 139, 0.2);
+        box-shadow: 0 4px 12px var(--shadow-light);
+        transform: translateY(-1px);
         text-decoration: none;
       }
 
-      .btn-group {
-        display: flex;
-        gap: 10px;
-        justify-content: center;
-        margin-top: 30px;
+      /* Responsividade */
+      @media (max-width: 768px) {
+        .card {
+          padding: 30px;
+          margin: 10px;
+          border-radius: 12px;
+        }
+
+        .btn-group {
+          flex-direction: column;
+          gap: 10px;
+        }
+
+        button.btn-success, a.btn-secondary {
+          min-width: 100%;
+        }
+
+        h2 {
+          font-size: 1.5em;
+        }
+
+        label.form-label {
+          text-align: left; /* Em mobile, alinhar à esquerda para melhor legibilidade */
+        }
+      }
+
+      @media (max-width: 480px) {
+        body {
+          padding: 10px;
+        }
+
+        .card {
+          padding: 25px;
+        }
+
+        h2 {
+          font-size: 1.3em;
+        }
       }
     </style>
-  </head>
-  <body>
+</head>
+<body>
     <div class="container">
       <div class="card">
         <h2>Cadastrar Empresa</h2>
@@ -179,8 +261,8 @@
           th:object="${empresa}"
           method="post"
         >
-          <div class="mb-3">
-            <label for="nome" class="form-label">Nome da Empresa</label>
+          <div class="form-group">
+            <label for="nome" class="form-label">Nome da Empresa:</label>
             <input
               type="text"
               th:field="*{nome}"
@@ -191,22 +273,21 @@
             />
           </div>
 
-          <div class="mb-3">
-            <label for="cnpj" class="form-label">CNPJ</label>
+          <div class="form-group">
+            <label for="cnpj" class="form-label">CNPJ:</label>
             <input
               type="text"
               th:field="*{cnpj}"
               id="cnpj"
               class="form-control"
-              placeholder="Digite o CNPJ"
-              maxlength="14"
-              oninput="this.value = this.value.replace(/[^0-9]/g, '');"
+              placeholder="00.000.000/0000-00"
+              maxlength="18"
               required
             />
           </div>
 
-          <div class="mb-3">
-            <label for="ramo" class="form-label">Ramo da Empresa</label>
+          <div class="form-group">
+            <label for="ramo" class="form-label">Ramo da Empresa:</label>
             <input
               type="text"
               th:field="*{ramo}"
@@ -218,11 +299,31 @@
           </div>
 
           <div class="btn-group">
-            <button type="submit" class="btn btn-success">Salvar</button>
-            <a th:href="@{/empresaCTR}" class="btn btn-secondary">Cancelar</a>
+            <button type="submit" class="btn-success">
+              <i class="bi bi-check-circle"></i> Salvar
+            </button>
+            <a th:href="@{/empresaCTR}" class="btn-secondary">
+              <i class="bi bi-arrow-left"></i> Cancelar
+            </a>
           </div>
         </form>
       </div>
     </div>
-  </body>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Script para máscara de CNPJ -->
+    <script>
+      document.getElementById('cnpj').addEventListener('input', function (e) {
+        let value = e.target.value.replace(/\D/g, ''); // Remove tudo que não é dígito
+        if (value.length > 14) value = value.slice(0, 14); // Limita a 14 dígitos
+        // Aplica máscara CNPJ
+        value = value.replace(/(\d{2})(\d)/, '$1.$2');
+        value = value.replace(/(\d{3})(\d)/, '$1.$2');
+        value = value.replace(/(\d{3})(\d)/, '$1/$2');
+        value = value.replace(/(\d{4})(\d{1,2})$/, '$1-$2');
+        e.target.value = value;
+      });
+    </script>
+</body>
 </html>

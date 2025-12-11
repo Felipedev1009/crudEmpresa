@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Cadastrar Funcionario</title>
+    <title>Buscar Funcionário</title>
     <!-- Google Fonts para tipografia profissional -->
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
     <!-- Bootstrap CSS -->
@@ -46,7 +46,7 @@
 
       /* Container responsivo */
       .container {
-        max-width: 500px;
+        max-width: 1200px;
         width: 100%;
         padding: 0 15px;
       }
@@ -67,6 +67,7 @@
         transition: transform 0.3s var(--transition-fast), box-shadow 0.3s var(--transition-fast);
         text-align: center;
         position: relative;
+        overflow-x: auto; /* Para responsividade da tabela */
       }
 
       .card::before {
@@ -122,22 +123,24 @@
         border-radius: 2px;
       }
 
-      /* Formulário */
-      .form-group {
-        margin-bottom: 25px;
-      }
-
-      label.form-label {
+      h4 {
+        text-align: center;
+        margin-bottom: 20px;
         font-weight: 500;
         color: var(--text-color);
-        margin-bottom: 8px;
-        font-size: 14px;
-        letter-spacing: 0.5px;
-        display: block;
-        text-align: left; /* Alinhado à esquerda */
       }
 
-      input.form-control, select.form-control {
+      /* Formulário de busca */
+      .search-form {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin-bottom: 30px;
+        gap: 15px;
+        flex-wrap: wrap;
+      }
+
+      .search-input {
         background: rgba(255, 255, 255, 0.9);
         border: 1px solid rgba(0, 0, 0, 0.1);
         border-radius: 8px;
@@ -146,30 +149,22 @@
         font-size: 16px;
         transition: border-color 0.3s var(--transition-fast), box-shadow 0.3s var(--transition-fast), background 0.3s var(--transition-fast);
         width: 100%;
+        max-width: 400px;
         box-sizing: border-box;
       }
 
-      input.form-control::placeholder, select.form-control option {
+      .search-input::placeholder {
         color: rgba(31, 41, 55, 0.5);
       }
 
-      input.form-control:focus, select.form-control:focus {
+      .search-input:focus {
         border-color: var(--btn-gradient-start) !important;
         box-shadow: 0 0 8px 2px rgba(37, 99, 235, 0.2);
         background: #ffffff !important;
         outline: none;
       }
 
-      /* Botões */
-      .btn-group {
-        display: flex;
-        gap: 15px;
-        justify-content: center;
-        margin-top: 30px;
-        flex-wrap: wrap;
-      }
-
-      button.btn-success {
+      .search-btn {
         border-radius: 8px;
         padding: 12px 24px;
         font-weight: 500;
@@ -181,16 +176,56 @@
         align-items: center;
         justify-content: center;
         font-size: 1em;
-        min-width: 150px;
+        min-width: 120px;
         background: linear-gradient(135deg, var(--btn-gradient-start), var(--btn-gradient-end));
         color: #ffffff;
         box-shadow: 0 4px 12px rgba(37, 99, 235, 0.3);
+        cursor: pointer;
       }
 
-      button.btn-success:hover {
+      .search-btn:hover {
         background: linear-gradient(135deg, var(--btn-hover-start), var(--btn-hover-end));
         box-shadow: 0 6px 20px rgba(37, 99, 235, 0.5);
         transform: translateY(-2px);
+      }
+
+      /* Estilo da tabela */
+      table {
+        width: 100%;
+        border-collapse: separate;
+        border-spacing: 0;
+        border-radius: 10px;
+        overflow: hidden;
+        background: rgba(255, 255, 255, 0.9);
+        box-shadow: 0 4px 15px var(--shadow-light);
+        margin-bottom: 30px;
+      }
+
+      th {
+        background: linear-gradient(135deg, var(--btn-gradient-start), var(--btn-gradient-end));
+        color: #ffffff;
+        font-weight: 600;
+        padding: 15px 12px;
+        text-align: left;
+        letter-spacing: 0.5px;
+        border: none;
+      }
+
+      td {
+        padding: 12px;
+        border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+        color: var(--text-color);
+        transition: background 0.3s var(--transition-fast);
+      }
+
+      tr:hover {
+        background: rgba(59, 130, 246, 0.1);
+        transform: scale(1.01);
+        transition: background 0.3s var(--transition-fast), transform 0.3s var(--transition-fast);
+      }
+
+      tr:last-child td {
+        border-bottom: none;
       }
 
       /* Responsividade */
@@ -201,21 +236,29 @@
           border-radius: 12px;
         }
 
-        .btn-group {
+        .search-form {
           flex-direction: column;
           gap: 10px;
         }
 
-        button.btn-success {
+        .search-input {
+          max-width: 100%;
+        }
+
+        .search-btn {
           min-width: 100%;
+        }
+
+        table {
+          font-size: 14px;
+        }
+
+        th, td {
+          padding: 8px 6px;
         }
 
         h2 {
           font-size: 1.5em;
-        }
-
-        label.form-label {
-          text-align: left; /* Em mobile, alinhar à esquerda para melhor legibilidade */
         }
       }
 
@@ -236,44 +279,43 @@
 </head>
 <body>
     <div class="container">
-      <div class="card">
-        <h2>Cadastrar Funcionario</h2>
+        <div class="card">
+            <h2>Buscar Funcionário por Nome</h2>
 
-        <form th:action="@{/funcionarioCTR/salvarFuncionario}" method="post" th:object="${funcionario}">
-        
-          <div class="form-group">
-            <label for="nome" class="form-label">Nome:</label>
-            <input type="text" id="nome" th:field="*{nome}" class="form-control" placeholder="Digite o nome do funcionário" required>
-          </div>
+            <!-- Formulário de busca -->
+            <form th:action="@{/funcionarioCTR/buscarFuncionarioNome}" method="get" class="search-form">
+                <input type="text" name="nomefunc" th:value="${nomefunc}" class="search-input" placeholder="Digite o nome do funcionário" />
+                <button type="submit" class="search-btn">
+                  <i class="bi bi-search"></i> Buscar
+                </button>
+            </form>
+            
+            <!-- Exibe a tabela com os resultados -->
+            <div th:if="${funcionarioNome}">
+                <h4 th:text="'Resultado da busca: ' + ${funcionarioNome.size()} + ' funcionário(s) encontrado(s)'"></h4>
 
-          <div class="form-group">
-            <label for="cargo" class="form-label">Cargo:</label>
-            <input type="text" id="cargo" th:field="*{cargo}" class="form-control" placeholder="Digite o cargo" required>
-          </div>
-
-          <div class="form-group">
-            <label for="salario" class="form-label">Salário:</label>
-            <input type="number" id="salario" step="0.01" th:field="*{salario}" class="form-control" placeholder="Digite o salário" required>
-          </div>
-
-          <div class="form-group">
-            <label for="empresa" class="form-label">Empresa:</label>
-            <select id="empresa" th:field="*{identificadorEmpresa}" class="form-control" required>
-              <option value="">Selecione uma empresa</option>
-              <option th:each="emp : ${empresas}"
-                      th:value="${emp.id_empresa}"
-                      th:text="${emp.nome}">
-              </option>
-            </select>
-          </div>
-
-          <div class="btn-group">
-            <button type="submit" class="btn-success">
-              <i class="bi bi-check-circle"></i> Salvar
-            </button>
-          </div>
-        </form>
-      </div>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Nome</th>
+                            <th>Cargo</th>
+                            <th>Salário</th>
+                            <th>Empresa</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr th:each="func : ${funcionarioNome}">
+                        <td th:text="${func.id_codigo}"></td>
+                        <td th:text="${func.nome}"></td>
+                        <td th:text="${func.cargo}"></td>
+                        <td th:text="${func.salario}"></td>
+                        <td th:text="${func.identificadorEmpresa.nome}"></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
     </div>
 
     <!-- Bootstrap JS -->
